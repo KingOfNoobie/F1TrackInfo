@@ -3,7 +3,7 @@ services:
     build: .
     container_name: f1-track-info
     ports:
-      - "${PORT:-8765}:8000"
+      - "${PORT:-8765}:80"
     environment:
       - LIVE_POLL_SECONDS=${LIVE_POLL_SECONDS:-20}
       - OPENF1_CACHE_SECONDS=${OPENF1_CACHE_SECONDS:-20}

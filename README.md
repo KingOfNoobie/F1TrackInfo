@@ -31,6 +31,26 @@ Copy `.env.example` to `.env` if you want to change the host port or cache inter
 | `OPEN_METEO_CACHE_SECONDS` | `60` | Server cache for forecast |
 | `SESSION_CACHE_SECONDS` | `300` | Server cache for calendar/track |
 
+## Fast-Release deploy
+
+CI builds and pushes the image to GHCR, then notifies Fast-Release on every push to `main`.
+
+Public URL (example): `https://f1trackweahter.kingofnoobie.fast-release.com`
+
+### GitHub Actions secrets
+
+Repo → **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+|--------|--------|
+| `FAST_RELEASE_DEPLOY_TOKEN` | Deploy token from the Fast-Release dashboard (shown once at project create) |
+| `FAST_RELEASE_PROJECT_ID` | `cmulpx8fx0001hkxs0ih27gi0` |
+| `FAST_RELEASE_API_URL` | Base URL of your Fast-Release API (no trailing slash). Local API is `http://localhost:4000`, but GitHub runners cannot reach localhost — use a tunnel (ngrok/cloudflared) or your public API host |
+
+Do not commit these values. The workflow uses `${{ secrets.* }}` only.
+
+Workflow file: [`.github/workflows/fast-release.yml`](.github/workflows/fast-release.yml)
+
 ## API
 
 - `GET /api/health`
