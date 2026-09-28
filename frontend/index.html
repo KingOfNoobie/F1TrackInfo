@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F1 Track Info</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/vendor/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="app">
+      <header class="topbar">
+        <p class="race-title" id="race-title">Loading weekend…</p>
+        <div class="clock-block">
+          <span class="clock-label">UTC</span>
+          <span class="clock-value" id="clock">--:--:--</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <section class="map-panel" aria-label="Circuit map">
+          <div class="map-frame">
+            <div id="geo-map" class="geo-map"></div>
+            <svg
+              id="track-svg"
+              class="track-svg"
+              viewBox="0 0 1000 1000"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="true"
+            >
+              <path id="track-path" d=""></path>
+            </svg>
+            <div class="map-caption ticker-caption">
+              <span class="ticker-label" id="ticker-label">STANDINGS</span>
+              <div class="ticker" aria-label="Live standings ticker">
+                <div class="ticker-track" id="ticker-track">
+                  <span class="ticker-text" id="ticker-text">Waiting for standings…</span>
+                </div>
+              </div>
+            </div>
+            <div class="radar-controls" id="radar-controls">
+              <button type="button" id="radar-prev" class="radar-btn" title="Previous 10 min">◀</button>
+              <button type="button" id="radar-play" class="radar-btn" title="Play/Pause">▶</button>
+              <button type="button" id="radar-next" class="radar-btn" title="Next 10 min">▶|</button>
+              <span class="radar-time" id="radar-time">Radar --:--</span>
+              <span class="radar-hint">10 min steps · clouds/rain</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="side-panel" aria-label="Track weather and info">
+          <section class="weather-board">
+            <div class="session-line">
+              <span id="session-name">SESSION</span>
+              <span class="sep">/</span>
+              <span id="session-meta" class="session-meta">Awaiting data</span>
+            </div>
+
+            <div class="metrics">
+              <article class="metric metric-hero" data-key="air">
+                <span class="metric-label">AIR</span>
+                <span class="metric-value"
+                  ><span id="air-temp">--</span><span class="unit">°C</span></span
+                >
+              </article>
+              <article class="metric metric-hero" data-key="track">
+                <span class="metric-label">TRACK</span>
+                <span class="metric-value"
+                  ><span id="track-temp">--</span><span class="unit">°C</span></span
+                >
+              </article>
+              <article class="metric metric-wind" data-key="wind">
+                <span class="metric-label">WIND</span>
+                <div class="wind-row">
+                  <span class="metric-value"
+                    ><span id="wind-speed">--</span><span class="unit">km/h</span></span
+                  >
+                  <div class="wind-compass" aria-hidden="true">
+                    <div class="wind-ring"></div>
+                    <div class="wind-arrow" id="wind-arrow"></div>
+                  </div>
+                </div>
+                <span class="metric-sub"
+                  ><span id="wind-dir">--</span> · <span id="wind-deg">--</span>°</span
+                >
+              </article>
+              <article class="metric" data-key="rain">
+                <span class="metric-label">RAIN</span>
+                <span class="metric-value"
+                  ><span id="rain">--</span><span class="unit">mm</span></span
+                >
+              </article>
+              <article class="metric" data-key="hum">
+                <span class="metric-label">HUM</span>
+                <span class="metric-value"
+                  ><span id="humidity">--</span><span class="unit">%</span></span
+                >
+              </article>
+              <article class="metric" data-key="press">
+                <span class="metric-label">PRESS</span>
+                <span class="metric-value"
+                  ><span id="pressure">--</span><span class="unit">hPa</span></span
+                >
+              </article>
+            </div>
+          </section>
+
+          <section class="track-panel">
+            <h2 class="panel-title">Track Info</h2>
+            <dl class="track-grid" id="track-grid">
+              <div><dt>Circuit</dt><dd id="track-name">—</dd></div>
+              <div><dt>Location</dt><dd id="track-location">—</dd></div>
+              <div><dt>Grand Prix</dt><dd id="track-gp">—</dd></div>
+              <div><dt>Round</dt><dd id="track-round">—</dd></div>
+              <div><dt>Length</dt><dd id="track-length">—</dd></div>
+              <div><dt>Laps</dt><dd id="track-laps">—</dd></div>
+              <div><dt>Race distance</dt><dd id="track-distance">—</dd></div>
+              <div><dt>Race start</dt><dd id="track-race-time">—</dd></div>
+            </dl>
+          </section>
+        </aside>
+      </main>
+
+      <section class="forecast" aria-label="Circuit forecast">
+        <div class="forecast-head">
+          <h2>Circuit Forecast</h2>
+          <p id="forecast-note">Location weather at the circuit</p>
+        </div>
+        <div class="forecast-strip" id="forecast-strip"></div>
+      </section>
+    </div>
+    <script src="/static/vendor/leaflet/leaflet.js"></script>
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>

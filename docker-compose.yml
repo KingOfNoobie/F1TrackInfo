@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    container_name: f1-track-info
+    ports:
+      - "${PORT:-8765}:8000"
+    environment:
+      - LIVE_POLL_SECONDS=${LIVE_POLL_SECONDS:-20}
+      - OPENF1_CACHE_SECONDS=${OPENF1_CACHE_SECONDS:-20}
+      - OPEN_METEO_CACHE_SECONDS=${OPEN_METEO_CACHE_SECONDS:-60}
+      - SESSION_CACHE_SECONDS=${SESSION_CACHE_SECONDS:-300}
+    restart: unless-stopped
